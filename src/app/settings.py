@@ -1,9 +1,8 @@
 from typing import TypeVar
 from urllib.parse import quote_plus
 
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-# from pydantic import SecretStr
 
 TSettings = TypeVar("TSettings", bound=BaseSettings)
 
@@ -11,21 +10,22 @@ TSettings = TypeVar("TSettings", bound=BaseSettings)
 class TelegramBotSettings(BaseSettings):
     model_config = SettingsConfigDict(str_strip_whitespace=True, env_prefix="bot_")
 
-    token: str  # SecretStr
+    token: SecretStr
 
 
 class DatabaseSettings(BaseSettings):
-    model_config = SettingsConfigDict(str_strip_whitespace=True, env_prefix="database_")
+    model_config = SettingsConfigDict(str_strip_whitespace=True, env_prefix="db_")
 
     driver: str = "postgresql+asyncpg"
-    name: str
+    host: str
+    port: str
     username: str
     password: str
-    host: str
+    name: str
 
-    echo: bool = False
+    echo: bool
 
     @property
     def url(self) -> str:
         password = quote_plus(self.password)
-        return f"{self.driver}://{self.username}:{password}@{self.host}/{self.name}"
+        return f"{self.driver}://{self.username}:{password}@{self.host}:{self.port}/{self.name}"

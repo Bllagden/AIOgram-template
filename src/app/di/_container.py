@@ -5,8 +5,8 @@ from collections.abc import Iterable
 import aioinject
 from pydantic_settings import BaseSettings
 
-# from app.db.dependencies import create_session
 # from app.settings import AppSettings
+from app.db.dependencies import create_session
 from lib.settings import get_settings
 from lib.types import Providers
 
@@ -31,7 +31,7 @@ def _register_settings(
 @functools.lru_cache
 def create_container() -> aioinject.Container:
     container = aioinject.Container()
-    # container.register(aioinject.Scoped(create_session))
+    container.register(aioinject.Scoped(create_session))
 
     for provider in itertools.chain.from_iterable(MODULES):
         container.register(provider)
