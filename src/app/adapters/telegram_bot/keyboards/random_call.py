@@ -1,4 +1,7 @@
-from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
+from aiogram.utils.keyboard import (  # type: ignore[attr-defined]
+    InlineKeyboardBuilder,
+    InlineKeyboardButton,
+)
 
 from app.adapters.telegram_bot.callbacks import RandomCallback
 

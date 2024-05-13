@@ -1,4 +1,7 @@
-from aiogram.utils.keyboard import KeyboardButton, ReplyKeyboardBuilder
+from aiogram.utils.keyboard import (  # type: ignore[attr-defined]
+    KeyboardButton,
+    ReplyKeyboardBuilder,
+)
 
 CONTACTS_GEO_BUTTON = KeyboardButton(
     text="Запросить геолокацию",

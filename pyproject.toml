@@ -57,6 +57,10 @@ lint.fixable = [
   "COM",
   "UP",
   "RUF",
+  "D213",
+]
+lint.unfixable = [
+  "F841", # Variable is assigned to but never used
 ]
 lint.ignore = [
   "E501", # Line Length
@@ -69,11 +73,8 @@ lint.ignore = [
   "TCH001",
   "TCH002",
   "TCH003",
-  "RUF001",
   "RUF002",
   "RUF003",
-  "RUF012",
-  "RUF200",
   "EXE002",
   "TD003",
   "FIX002",
@@ -83,6 +84,8 @@ lint.ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
+"src/app/alembic/*" = ["INP001"]
+"src/app/alembic/versions/*" = ["D400", "D415"]
 "tests/*" = [
   "S101",
   "PT006", # Wrong name(s) type in `@pytest.mark.parametrize`, expected `tuple`
@@ -104,21 +107,21 @@ plugins = [
 
 follow_imports = "normal"
 ignore_missing_imports = false
-strict = true
-
+ignore_errors = false
 check_untyped_defs = true
+strict = true
+strict_optional = true
+strict_equality = true
+no_implicit_optional = true
+allow_redefinition = false
+local_partial_types = true
+
 disallow_untyped_calls = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 disallow_any_generics = true
-
-allow_redefinition = false
 disallow_any_explicit = false
-ignore_errors = false
-local_partial_types = true
-no_implicit_optional = true
-strict_optional = true
-strict_equality = true
+
 warn_redundant_casts = true
 warn_unused_ignores = true
 warn_no_return = true

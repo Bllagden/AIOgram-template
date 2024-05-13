@@ -3,7 +3,7 @@ from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
-from sqlalchemy.engine import Connectable, Connection
+from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.db import Base
@@ -18,13 +18,13 @@ if config.config_file_name is not None:
 
 if not config.get_main_option("sqlalchemy.url"):
     config.set_main_option("sqlalchemy.url", get_settings(DatabaseSettings).url)
-# print(get_settings(DatabaseSettings).url)
 
 target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
+    """
+    Run migrations in 'offline' mode.
 
     This configures the context with just a URL
     and not an Engine, though an Engine is acceptable
@@ -48,7 +48,8 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
-    """Run migrations in 'online' mode.
+    """
+    Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
     and associate a connection with the context.
@@ -65,7 +66,7 @@ def do_run_migrations(connection: Connection) -> None:
         context.run_migrations()
 
 
-async def do_run_migrations_async(connectable: Connectable) -> None:
+async def do_run_migrations_async(connectable: AsyncEngine) -> None:
     async with connectable.connect() as conn:
         await conn.run_sync(do_run_migrations)
 
@@ -73,9 +74,13 @@ async def do_run_migrations_async(connectable: Connectable) -> None:
 def run_migrations() -> None:
     connectable = context.config.attributes.get("connection")
     if not connectable:
+        section = config.get_section(config.config_ini_section)
+        if section is None:
+            raise ValueError
+
         connectable = AsyncEngine(
             engine_from_config(
-                config.get_section(config.config_ini_section),
+                section,
                 poolclass=pool.NullPool,
                 future=True,
             ),

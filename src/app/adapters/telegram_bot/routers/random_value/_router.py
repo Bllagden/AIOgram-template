@@ -34,7 +34,7 @@ class RandomCallbackHandler(CallbackQueryHandler, RemoveKeyboardMixin):
     ) -> None:
         await self._remove_keyboard()
 
-        print(repository)
+        print(repository)  # noqa: T201
         await self.bot.send_message(
             chat_id=self.from_user.id,
             text=str(randint(1, 10)),  # noqa: S311

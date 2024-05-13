@@ -13,6 +13,7 @@ class SomeMiddleware(BaseMiddleware):
         data: dict[str, Any],
     ) -> Any:  # noqa: ANN401
         handle = handler(event, data)
-        print("M Before handler")
+        print("M Before handler")  # noqa: T201
         await handle
-        print("M After handler")
+        print("M After handler")  # noqa: T201
+        print("Хорошо")  # noqa: T201

@@ -22,4 +22,4 @@ async def contacts_handler(message: Message) -> None:
 @router.message(F.contact)
 async def contact_handler(message: Message) -> None:
     phone_number = getval(message.contact.phone_number)
-    print(phone_number)
+    print(phone_number)  # noqa: T201
