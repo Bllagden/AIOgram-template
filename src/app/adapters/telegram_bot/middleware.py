@@ -16,4 +16,3 @@ class SomeMiddleware(BaseMiddleware):
         print("M Before handler")  # noqa: T201
         await handle
         print("M After handler")  # noqa: T201
-        print("Хорошо")  # noqa: T201
